@@ -24,18 +24,19 @@ CMD ["npm", "run", "start:dev"]
 FROM node:16-alpine as prod
 
 RUN adduser -D bunnyshell
-USER bunnyshell
 
 ENV NODE_ENV=production
 
 WORKDIR /usr/src/app/backend
+RUN chown -R bunnyshell:bunnyshell /usr/src/app/backend
+USER bunnyshell
 
 # in production we dont need dev dependencies, running `npm ci` with `NODE_ENV=production` will install only the main dependencies
-COPY package*.json .
+COPY --chown=bunnyshell package*.json .
 RUN npm ci
 
 # we don't have a build stage, so just copy the files from docker context again
-COPY . .
+COPY --chown=bunnyshell . .
 
 EXPOSE 3080
 
