@@ -23,6 +23,9 @@ CMD ["npm", "run", "start:dev"]
 # production stage
 FROM node:16-alpine as prod
 
+RUN adduser -D bunnyshell
+USER bunnyshell
+
 ENV NODE_ENV=production
 
 WORKDIR /usr/src/app/backend
