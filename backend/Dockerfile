@@ -23,6 +23,8 @@ CMD ["npm", "run", "start:dev"]
 # production stage
 FROM node:16-alpine as prod
 
+RUN apk add musl libgcc libstdc++ git curl wget bash ca-certificates gcompat openssh-client
+
 RUN adduser -D bunnyshell
 
 ENV NODE_ENV=production
